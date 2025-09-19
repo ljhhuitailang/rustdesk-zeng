@@ -9,14 +9,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  # 基础测试构建
-  test-build:
-    uses: ./.github/workflows/ci-multiplatform.yml
+  # 使用简化的构建进行测试
+  simple-build:
+    uses: ./.github/workflows/simple-build.yml
 
-  # Flutter全平台构建
-  release-build:
+  # 可选：如果简化构建成功，尝试基础构建
+  basic-build:
+    needs: [simple-build]
+    uses: ./.github/workflows/ci-multiplatform.yml
+    # 只在手动触发时运行完整构建
+    if: github.event_name == 'workflow_dispatch'
+
+  # 可选：完整的Flutter构建（仅在标签发布时）
+  full-build:
+    needs: [simple-build]
     uses: ./.github/workflows/flutter-build.yml
+    if: startsWith(github.ref, 'refs/tags/v')
     with:
       upload-artifact: true
-      upload-tag: ${{ github.ref_type == 'tag' && github.ref_name || 'nightly' }}
+      upload-tag: ${{ github.ref_name }}
     secrets: inherit
