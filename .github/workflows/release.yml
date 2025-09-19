@@ -20,12 +20,3 @@ jobs:
       upload-artifact: true
       upload-tag: ${{ github.ref_type == 'tag' && github.ref_name || 'nightly' }}
     secrets: inherit
-
-  # 增强版Flutter构建 (如果需要更多控制)
-  enhanced-build:
-    if: github.event_name == 'workflow_dispatch'
-    uses: ./.github/workflows/flutter-build-enhanced.yml
-    with:
-      upload-artifact: true
-      upload-tag: 'enhanced-${{ github.run_number }}'
-    secrets: inherit
