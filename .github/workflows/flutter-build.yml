@@ -80,12 +80,12 @@ jobs:
             }
           # - { target: aarch64-pc-windows-msvc, os: windows-2022, arch: aarch64 }
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -132,16 +132,16 @@ jobs:
           targets: ${{ matrix.job.target }}
           components: "rustfmt"
 
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: ${{ matrix.job.os }}
+      # - uses: Swatinem/rust-cache@v2  # Temporarily disabled due to cache service issues
+      #   with:
+      #     prefix-key: ${{ matrix.job.os }}
 
       - name: Setup vcpkg with Github Actions binary cache
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: C:\vcpkg
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: false
+          doNotCache: true # Temporarily disable cache due to service issues
 
       - name: Install vcpkg dependencies
         env:
@@ -301,12 +301,12 @@ jobs:
             }
           # - { target: aarch64-pc-windows-msvc, os: windows-2022 }
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -325,16 +325,16 @@ jobs:
           targets: ${{ matrix.job.target }}
           components: "rustfmt"
 
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: ${{ matrix.job.os }}-sciter
+      # - uses: Swatinem/rust-cache@v2  # Temporarily disabled due to cache service issues
+      #   with:
+      #     prefix-key: ${{ matrix.job.os }}
 
       - name: Setup vcpkg with Github Actions binary cache
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgDirectory: C:\vcpkg
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: false
+          doNotCache: true # Temporarily disable cache due to service issues
 
       - name: Install vcpkg dependencies
         env:
@@ -441,12 +441,12 @@ jobs:
               vcpkg-triplet: arm64-ios,
             }
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Install dependencies
         run: |
@@ -471,7 +471,7 @@ jobs:
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: false
+          doNotCache: true # Temporarily disable cache due to service issues
 
       - name: Install vcpkg dependencies
         run: |
@@ -498,10 +498,10 @@ jobs:
           targets: ${{ matrix.job.target }}
           components: "rustfmt"
 
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: rustdesk-lib-cache-ios
-          key: ${{ matrix.job.target }}
+      # - uses: Swatinem/rust-cache@v2  # Temporarily disabled due to cache service issues
+      #   with:
+      #     prefix-key: ${{ matrix.job.os }}
+      #     key: ${{ matrix.job.target }}
 
       - name: Restore bridge files
         uses: actions/download-artifact@master
@@ -569,12 +569,12 @@ jobs:
               vcpkg-triplet: arm64-osx,
             }
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -650,9 +650,9 @@ jobs:
           targets: ${{ matrix.job.target }}
           components: "rustfmt"
 
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: ${{ matrix.job.os }}
+      # - uses: Swatinem/rust-cache@v2  # Temporarily disabled due to cache service issues
+      #   with:
+      #     prefix-key: ${{ matrix.job.os }}
 
       - name: Restore bridge files
         uses: actions/download-artifact@master
@@ -664,7 +664,7 @@ jobs:
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: false
+          doNotCache: true # Temporarily disable cache due to service issues
 
       - name: Install vcpkg dependencies
         run: |
@@ -829,12 +829,12 @@ jobs:
           docker-images: true
           swap-storage: false
 
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Install dependencies
         run: |
@@ -898,7 +898,7 @@ jobs:
         with:
           vcpkgDirectory: /opt/artifacts/vcpkg
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: false
+          doNotCache: true # Temporarily disable cache due to service issues
 
       - name: Install vcpkg dependencies
         run: |
@@ -940,10 +940,10 @@ jobs:
           toolchain: ${{ env.RUST_VERSION }}
           components: "rustfmt"
 
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: rustdesk-lib-cache-android # TODO: drop '-android' part after caches are invalidated
-          key: ${{ matrix.job.target }}
+      # - uses: Swatinem/rust-cache@v2  # Temporarily disabled due to cache service issues
+      #   with:
+      #     prefix-key: ${{ matrix.job.os }}
+      #     key: ${{ matrix.job.target }}
 
       - name: Build rustdesk lib
         env:
@@ -1099,12 +1099,12 @@ jobs:
           docker-images: true
           swap-storage: false
 
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Install dependencies
         run: |
@@ -1286,12 +1286,12 @@ jobs:
               vcpkg-triplet: arm64-linux,
             }
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Maximize build space
         run: |
@@ -1351,7 +1351,7 @@ jobs:
         with:
           vcpkgDirectory: /opt/artifacts/vcpkg
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          doNotCache: false
+          doNotCache: true # Temporarily disable cache due to service issues
 
       - name: Install vcpkg dependencies
         if: matrix.job.arch == 'x86_64' || env.UPLOAD_ARTIFACT == 'true'
@@ -1626,12 +1626,12 @@ jobs:
               extra_features: ",unix-file-copy-paste",
             }
     steps:
-      - name: Export GitHub Actions cache environment variables
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+      # - name: Export GitHub Actions cache environment variables (disabled due to service issues)
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       core.exportVariable("ACTIONS_CACHE_URL", process.env.ACTIONS_CACHE_URL || "");
+      #       core.exportVariable("ACTIONS_RUNTIME_TOKEN", process.env.ACTIONS_RUNTIME_TOKEN || "");
 
       - name: Checkout source code
         uses: actions/checkout@v4
